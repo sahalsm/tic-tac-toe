@@ -60,7 +60,7 @@ const boxClicked = (e) => {
       for (let index = 0; index < spaces.length; index++) {
         if (spaces[index] == null) {
           spaces[index] = ai;
-          let score = minmax(spaces, 0, false);
+          let score = minimax(spaces, false);
           spaces[index] = null;
           if (score < bestScore) {
             bestScore = score;
@@ -73,6 +73,7 @@ const boxClicked = (e) => {
         if (index == bestMove) {
           const bv = document.getElementById("" + bestMove + "");
           bv.click();
+          
           return;
         }
       });
@@ -82,9 +83,10 @@ const boxClicked = (e) => {
   }
 };
 //minimax algorithm
-const minmax = (spaces, isMaximizing) => {
+const minimax = (spaces, isMaximizing) => {
   let result = playerHasWon();
   if (result != null) {
+    console.log(result);
     return result;
   }
   // AI move
@@ -93,7 +95,7 @@ const minmax = (spaces, isMaximizing) => {
     for (let index = 0; index < spaces.length; index++) {
       if (spaces[index] == null) {
         spaces[index] = ai;
-        let score = minmax(spaces, false);
+        let score = minimax(spaces, false);
         spaces[index] = null;
         if (score < bestScore) {
             bestScore = score;
@@ -106,7 +108,7 @@ const minmax = (spaces, isMaximizing) => {
     for (let index = 0; index < spaces.length; index++) {
       if (spaces[index] == null) {
         spaces[index] = human;
-        let score = minmax(spaces, true);
+        let score = minimax(spaces, true);
         spaces[index] = null;
         if (score > bestScore) {
           bestScore = score;
